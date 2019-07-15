@@ -1,18 +1,20 @@
 import React from 'react';
+import axios from 'axios';
 import logo from '../logo.svg';
 import TopNavBar from './Components/TopNavBar'
 import Header from './Components/Header'
 import Container from './Components/Container'
 import AboutContainer from './Components/AboutContainer'
 import Event from './Components/Event'
-import ListCard from './Components/ListCard'
+import ListCard from './Components/ListCard2'
 
 class Main extends React.Component{
 constructor(props){
   super(props);  
   this.state ={
     isShowHeader : true,
-    filter:""
+    filter:"",
+    sData:[]
   };
 
 }
@@ -44,6 +46,27 @@ gantiFlag(){
 
 }
 
+componentDidMount(){
+  this.fatching();
+  console.log("tesas");
+}
+
+fatching(){
+  let opt ={
+    method: 'GET',
+    url: 'https://swapi.co/api/people/'
+  }
+
+  axios(opt)
+  .then(({data})=>{
+
+    this.setState({sData :data.results})
+    console.log(this.state.sData);
+  }).catch(error=>{
+    console.log(error);
+  })
+
+}
 
   render() {
     return (
@@ -56,8 +79,12 @@ gantiFlag(){
             <b>Member</b>
             <AboutContainer></AboutContainer>
             <b>Past Meetups</b>
-            <ListCard filter={this.state.filter}></ListCard>
-            
+            <ListCard 
+              filter={this.state.filter} 
+              json={this.state.sData}>
+
+            </ListCard>
+          
           </div>
          {/*<header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
