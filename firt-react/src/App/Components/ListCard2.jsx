@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-function ListCart({filter,json}) {
+function ListCart({filter,json,page,Prev,Next,Switchpage }) {
 
       //   let json = [{
       //     id: 1,
@@ -26,10 +26,25 @@ function ListCart({filter,json}) {
       //     content2: 'ini bukan siapa siapa'
       // }]
 
-      console.log(json.lenght)
-if(json.lenght >0){
+      console.log(json.length)
+
+let Prevhtml;
+let Nexthtml;
+
+
+if(Prev === true)
+    Prevhtml =<div className="Page-Control" onClick={(e)=>Switchpage(-1)} >Prev</div>;
+else 
+    Prevhtml =<div></div>;
+
+if(Next === true)
+    Nexthtml =<div className="Page-Control" onClick={(e)=>Switchpage(1)} >Next</div>;
+else 
+    Nexthtml =<div></div>;
+
+if(json.length ===0){
     return(
-        <div></div>
+        <div>loadding...</div>
     )
 
 }
@@ -61,6 +76,11 @@ else {
                 
                 
                </div>
+               <div className="Paging-Controllers">
+                    {Prevhtml}
+                    <div className="Page-Control"> {page} </div>
+                    {Nexthtml}
+              </div>
         </div>
       );
    

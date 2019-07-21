@@ -128,3 +128,12 @@ margin-left: 10px;
 .list-card{
   background: yellow;
 }
+
+.Paging-Controllers{
+  display:flex;
+  justify-content: start;
+}
+
+.Page-Control{
+  margin-left: 10px
+}

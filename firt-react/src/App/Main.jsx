@@ -14,7 +14,10 @@ constructor(props){
   this.state ={
     isShowHeader : true,
     filter:"",
-    sData:[]
+    sData:[],
+    page:2,
+    Prev:false,
+    Next:false
   };
 
 }
@@ -39,28 +42,50 @@ filterTerakhir(){
 }
 
 gantiFlag(){
-  if(this.state.isShowHeader == true)
+  if(this.state.isShowHeader === true)
     this.setState({isShowHeader:false})
     else 
     this.setState({isShowHeader:true})
 
 }
 
+SwithPage(e){
+  let newPage  =(this.state.page+e);
+  this.setState({page :newPage})
+  console.log( newPage+ " pages");
+  this.fatching(newPage)
+
+}
+
 componentDidMount(){
-  this.fatching();
+  this.fatching(this.state.page);
   console.log("tesas");
 }
 
-fatching(){
+fatching(page){
+  let urlGet ='https://swapi.co/api/people/?page='+page
+  console.log(urlGet);
   let opt ={
     method: 'GET',
-    url: 'https://swapi.co/api/people/'
+    url: urlGet
   }
 
   axios(opt)
   .then(({data})=>{
 
     this.setState({sData :data.results})
+
+    if(data.next === null)
+      this.setState({Next :false})
+    else
+      this.setState({Next :true})
+
+
+    if(data.previous === null)
+      this.setState({Prev :false})
+    else
+      this.setState({Prev :true})
+     
     console.log(this.state.sData);
   }).catch(error=>{
     console.log(error);
@@ -81,7 +106,11 @@ fatching(){
             <b>Past Meetups</b>
             <ListCard 
               filter={this.state.filter} 
-              json={this.state.sData}>
+              json={this.state.sData}
+              page={this.state.page}
+              Prev={this.state.Prev}
+              Next={this.state.Next}
+              Switchpage ={(e)=>this.SwithPage(e)} >
 
             </ListCard>
           
