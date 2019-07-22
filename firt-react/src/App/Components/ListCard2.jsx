@@ -56,8 +56,7 @@ else {
         <div >
             
            <div className ='List-Cart'>
-    
-    
+       
                 {
           
                     json2.map((item, idx) => {

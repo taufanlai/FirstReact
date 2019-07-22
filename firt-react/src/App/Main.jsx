@@ -51,9 +51,10 @@ gantiFlag(){
 
 SwithPage(e){
   let newPage  =(this.state.page+e);
-  this.setState({page :newPage})
+  
+  this.setState({page :newPage,sData:[]},()=>this.fatching(this.state.page))
   console.log( newPage+ " pages");
-  this.fatching(newPage)
+//  this.fatching(newPage)
 
 }
 
